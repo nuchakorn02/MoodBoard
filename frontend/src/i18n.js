@@ -77,7 +77,12 @@ const resources = {
           "Newest": "ใหม่สุดก่อน",
           "Oldest": "เก่าสุดก่อน",
           "MostPopular": "ยอดนิยม"
-        }
+        },
+        "Filters": "ตัวกรอง",
+        "All Majors": "ทุกสาขา",
+        "All Years": "ทุกชั้นปี",
+        "Year Prefix": "ชั้นปี",
+        "Clear Filters": "ล้างตัวกรอง"
       },
       "Profile": {
         "Welcome": "ยินดีต้อนรับ",
@@ -272,7 +277,12 @@ const resources = {
           "Newest": "Newest First",
           "Oldest": "Oldest First",
           "MostPopular": "Most Popular"
-        }
+        },
+        "Filters": "Filters",
+        "All Majors": "All Majors",
+        "All Years": "All Years",
+          "Year Prefix": "Year",
+        "Clear Filters": "Clear Filters"
       },
       "Profile": {
         "Welcome": "Welcome",
