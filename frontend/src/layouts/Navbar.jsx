@@ -74,80 +74,136 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2 md:gap-4">
-            <button
-              onClick={toggleLanguage}
-              className="px-2 py-1 text-sm font-bold rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-            >
-              {i18n.language === 'th' ? 'EN' : 'TH'}
-            </button>
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
-              aria-label="Toggle dark mode"
-            >
-              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
-
-            {user ? (
-              <div className="flex items-center gap-3">
-                <Link to="/profile" className="flex items-center gap-2 hover:opacity-80 transition">
-                  <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-600">
-                    <UserIcon className="w-5 h-5 text-slate-500 dark:text-slate-400" />
-                  </div>
-                  <span className="hidden sm:block text-sm font-medium">{user.studentId}</span>
-                </Link>
-                <Button variant="ghost" size="icon" onClick={handleLogout} title={t('Navbar.Logout')}>
-                  <LogOut className="w-5 h-5 text-red-500 dark:text-red-400" />
-                </Button>
-              </div>
-            ) : (
-              <div className="flex gap-2">
-                <Link to="/login">
-                  <Button variant="ghost" size="sm">{t('Navbar.Login')}</Button>
-                </Link>
-                <Link to="/register">
-                  <Button variant="default" size="sm">{t('Navbar.Register')}</Button>
-                </Link>
-              </div>
-            )}
-            
-            {/* Hamburger Button */}
-            {user && (
-              <button 
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
+            {/* Desktop Only Right Menu */}
+            <div className="hidden md:flex items-center gap-2 md:gap-4">
+              <button
+                onClick={toggleLanguage}
+                className="px-2 py-1 text-sm font-bold rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
-                {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                {i18n.language === 'th' ? 'EN' : 'TH'}
               </button>
-            )}
+              <button
+                onClick={toggleDarkMode}
+                className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
+                aria-label="Toggle dark mode"
+              >
+                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+
+              {user ? (
+                <div className="flex items-center gap-3">
+                  <Link to="/profile" className="flex items-center gap-2 hover:opacity-80 transition">
+                    <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-600">
+                      <UserIcon className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+                    </div>
+                    <span className="text-sm font-medium">{user.studentId}</span>
+                  </Link>
+                  <Button variant="ghost" size="icon" onClick={handleLogout} title={t('Navbar.Logout')}>
+                    <LogOut className="w-5 h-5 text-red-500 dark:text-red-400" />
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <Link to="/login">
+                    <Button variant="ghost" size="sm">{t('Navbar.Login')}</Button>
+                  </Link>
+                  <Link to="/register">
+                    <Button variant="default" size="sm">{t('Navbar.Register')}</Button>
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* Hamburger Button (Always visible on mobile) */}
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
         
         {/* Mobile Menu Dropdown */}
-        {user && isMobileMenuOpen && (
+        {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-slate-200/50 dark:border-slate-800/50 flex flex-col gap-2 animate-in slide-in-from-top-2 duration-200">
-            <Link 
-              to="/" 
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-            >
-              {t('Navbar.Feed')}
-            </Link>
-            <Link 
-              to="/statistics" 
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-            >
-              {t('Navbar.Statistics')}
-            </Link>
-            {user.role === 'admin' && (
-              <Link 
-                to="/admin" 
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-2 rounded-lg text-sm font-medium text-sky-600 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-900/30 transition flex items-center gap-2"
+            {user ? (
+              <>
+                <Link to="/profile" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 mb-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl mx-2 border border-slate-100 dark:border-slate-700">
+                  <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-600">
+                    <UserIcon className="w-6 h-6 text-slate-500 dark:text-slate-400" />
+                  </div>
+                  <span className="font-medium text-slate-900 dark:text-white text-base">{user.studentId}</span>
+                </Link>
+                <Link 
+                  to="/" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-3 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition mx-2"
+                >
+                  {t('Navbar.Feed', 'หน้าหลัก')}
+                </Link>
+                <Link 
+                  to="/statistics" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-3 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition mx-2"
+                >
+                  {t('Navbar.Statistics', 'สถิติ')}
+                </Link>
+                {user.role === 'admin' && (
+                  <Link 
+                    to="/admin" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="px-4 py-3 rounded-lg text-base font-medium text-sky-600 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-900/30 transition flex items-center gap-2 mx-2"
+                  >
+                    <LayoutDashboard className="w-5 h-5" /> {t('Navbar.Admin Dashboard', 'แดชบอร์ดผู้ดูแล')}
+                  </Link>
+                )}
+              </>
+            ) : (
+              <div className="flex flex-col gap-2 px-4 mb-4">
+                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button variant="outline" className="w-full justify-center">{t('Navbar.Login', 'เข้าสู่ระบบ')}</Button>
+                </Link>
+                <Link to="/register" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button variant="default" className="w-full justify-center">{t('Navbar.Register', 'สมัครสมาชิก')}</Button>
+                </Link>
+              </div>
+            )}
+
+            <div className="flex items-center justify-between px-6 py-3 mt-2 border-t border-slate-100 dark:border-slate-800">
+              <span className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                {t('Navbar.Language', 'ภาษา')}
+              </span>
+              <button
+                onClick={toggleLanguage}
+                className="px-3 py-1 text-sm font-bold rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
               >
-                <LayoutDashboard className="w-4 h-4" /> {t('Navbar.Admin Dashboard')}
-              </Link>
+                {i18n.language === 'th' ? 'EN' : 'TH'}
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between px-6 py-3 border-b border-slate-100 dark:border-slate-800 mb-2">
+              <span className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                {t('Navbar.Theme', 'โหมดกลางคืน')}
+              </span>
+              <button
+                onClick={toggleDarkMode}
+                className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
+              >
+                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+            </div>
+
+            {user && (
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="mx-4 mt-2 px-4 py-3 rounded-xl text-sm font-bold text-white bg-red-500 hover:bg-red-600 transition flex items-center justify-center gap-2 shadow-sm"
+              >
+                <LogOut className="w-5 h-5" /> {t('Navbar.Logout', 'ออกจากระบบ')}
+              </button>
             )}
           </div>
         )}
