@@ -128,21 +128,21 @@ const Feed = () => {
           />
         </div>
         
-        <div className="flex w-full md:w-auto gap-4">
+        <div className="grid grid-cols-2 md:flex w-full md:w-auto gap-3">
           <Select 
-            className="w-full md:w-40"
+            className="w-full md:w-36 lg:w-40"
             value={dateFilter}
             onChange={(e) => { setDateFilter(e.target.value); setPage(1); }}
             options={dateFilters.map(d => ({ value: d, label: t(`Feed.${d}`) }))}
           />
           <Select 
-            className="w-full md:w-40"
+            className="w-full md:w-36 lg:w-40"
             value={moodType}
             onChange={(e) => { setMoodType(e.target.value); setPage(1); }}
             options={moodTypes.map(m => ({ value: m, label: t(`MoodTypes.${m}`) }))}
           />
           <Select 
-            className="w-full md:w-40"
+            className="w-full col-span-2 md:col-span-1 md:w-48 lg:w-56"
             value={faculty}
             onChange={(e) => { setFaculty(e.target.value); setPage(1); }}
             options={faculties.map(f => ({ value: f, label: t(`Faculties.${f}`) }))}
