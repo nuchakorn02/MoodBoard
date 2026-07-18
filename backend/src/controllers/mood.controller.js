@@ -51,26 +51,47 @@ const getMoods = async (req, res) => {
       query.createdBy = req.user._id
     }
 
-    const sortOptions = {
-      newest: { createdAt: -1 },
-      oldest: { createdAt: 1 },
-    }
-    const sortQuery = sortOptions[sort] || sortOptions.newest
-
     const skip = (Number(page) - 1) * Number(limit)
-    const total = await Mood.countDocuments(query)
-    const moods = await Mood.find(query)
-      .sort(sortQuery)
-      .skip(skip)
-      .limit(Number(limit))
-      
     const user_id = req.user ? req.user._id.toString() : null;
-    const moodsData = moods.map(mood => {
-      const isOwner = user_id && mood.createdBy && mood.createdBy.toString() === user_id;
-      const moodObj = mood.toObject();
-      delete moodObj.createdBy; // Never expose creator identity
-      return { ...moodObj, isOwner };
-    });
+
+    let moodsData, total;
+
+    if (sort === 'most_popular') {
+      // Use aggregation to sort by reaction count
+      const pipeline = [
+        { $match: query },
+        { $addFields: { reactionCount: { $size: { $ifNull: ['$reactions', []] } } } },
+        { $sort: { reactionCount: -1, createdAt: -1 } },
+        { $facet: {
+          data: [{ $skip: skip }, { $limit: Number(limit) }],
+          total: [{ $count: 'count' }]
+        }}
+      ];
+      const [result] = await Mood.aggregate(pipeline);
+      total = result.total[0]?.count || 0;
+      moodsData = result.data.map(mood => {
+        const isOwner = user_id && mood.createdBy && mood.createdBy.toString() === user_id;
+        delete mood.createdBy;
+        return { ...mood, isOwner };
+      });
+    } else {
+      const sortOptions = {
+        newest: { createdAt: -1 },
+        oldest: { createdAt: 1 },
+      }
+      const sortQuery = sortOptions[sort] || sortOptions.newest
+      total = await Mood.countDocuments(query)
+      const moods = await Mood.find(query)
+        .sort(sortQuery)
+        .skip(skip)
+        .limit(Number(limit))
+      moodsData = moods.map(mood => {
+        const isOwner = user_id && mood.createdBy && mood.createdBy.toString() === user_id;
+        const moodObj = mood.toObject();
+        delete moodObj.createdBy;
+        return { ...moodObj, isOwner };
+      });
+    }
 
     res.json({
       data: moodsData,

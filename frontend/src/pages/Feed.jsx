@@ -14,6 +14,11 @@ import { faculties as kmitlFaculties } from '../utils/constants';
 const moodTypes = ['All', 'Happy', 'Sad', 'Angry', 'Excited', 'Tired', 'Stressed', 'Lonely', 'Confused', 'Motivated', 'Relaxed'];
 const faculties = ['All', ...kmitlFaculties];
 const dateFilters = ['All Time', 'Today', 'This Week', 'This Month', 'This Year'];
+const sortOptions = [
+  { value: 'newest', labelKey: 'Feed.Sort.Newest' },
+  { value: 'oldest', labelKey: 'Feed.Sort.Oldest' },
+  { value: 'most_popular', labelKey: 'Feed.Sort.MostPopular' },
+];
 
 const Feed = () => {
   const [moods, setMoods] = useState([]);
@@ -26,6 +31,7 @@ const Feed = () => {
   const [moodType, setMoodType] = useState('All');
   const [faculty, setFaculty] = useState('All');
   const [dateFilter, setDateFilter] = useState('All Time');
+  const [sortBy, setSortBy] = useState('newest');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -41,6 +47,7 @@ const Feed = () => {
       const params = new URLSearchParams({
         page,
         limit: 12,
+        sort: sortBy,
       });
       if (searchTerm) params.append('keyword', searchTerm);
       if (moodType !== 'All') params.append('moodType', moodType);
@@ -57,7 +64,7 @@ const Feed = () => {
     } finally {
       setLoading(false);
     }
-  }, [page, searchTerm, moodType, faculty, dateFilter, t]);
+  }, [page, searchTerm, moodType, faculty, dateFilter, sortBy, t]);
 
   useEffect(() => {
     // Debounce search slightly
@@ -129,6 +136,12 @@ const Feed = () => {
         </div>
         
         <div className="grid grid-cols-2 md:flex w-full md:w-auto gap-3">
+          <Select 
+            className="w-full md:w-36 lg:w-40"
+            value={sortBy}
+            onChange={(e) => { setSortBy(e.target.value); setPage(1); }}
+            options={sortOptions.map(s => ({ value: s.value, label: t(s.labelKey, s.value) }))}
+          />
           <Select 
             className="w-full md:w-36 lg:w-40"
             value={dateFilter}

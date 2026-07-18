@@ -72,7 +72,12 @@ const resources = {
         "Next": "ถัดไป",
         "Page": "หน้า",
         "of": "จาก",
-        "DeleteConfirm": "คุณแน่ใจหรือไม่ว่าต้องการลบโพสต์นี้?"
+        "DeleteConfirm": "คุณแน่ใจหรือไม่ว่าต้องการลบโพสต์นี้?",
+        "Sort": {
+          "Newest": "ใหม่สุดก่อน",
+          "Oldest": "เก่าสุดก่อน",
+          "MostPopular": "ยอดนิยม"
+        }
       },
       "Profile": {
         "Welcome": "ยินดีต้อนรับ",
@@ -262,7 +267,12 @@ const resources = {
         "Next": "Next",
         "Page": "Page",
         "of": "of",
-        "DeleteConfirm": "Are you sure you want to delete this mood?"
+        "DeleteConfirm": "Are you sure you want to delete this mood?",
+        "Sort": {
+          "Newest": "Newest First",
+          "Oldest": "Oldest First",
+          "MostPopular": "Most Popular"
+        }
       },
       "Profile": {
         "Welcome": "Welcome",
