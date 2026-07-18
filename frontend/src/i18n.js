@@ -105,7 +105,14 @@ const resources = {
         "Overview": "ข้อมูลเชิงลึกด้านความรู้สึกของนักศึกษา",
         "Total Posts": "จำนวนโพสต์ทั้งหมด",
         "Mood Breakdown": "สัดส่วนของอารมณ์โดยรวม",
-        "Most Active Faculties": "คณะที่มีความเคลื่อนไหวมากที่สุด"
+        "Most Active Faculties": "คณะที่มีความเคลื่อนไหวมากที่สุด",
+        "Happy %": "สัดส่วนมีความสุข",
+        "Sad %": "สัดส่วนเศร้า",
+        "Stress %": "สัดส่วนเครียด",
+        "Mood Trend": "แนวโน้มความรู้สึก 7 วัน",
+        "Trend Desc": "ความรู้สึกของนักศึกษาแต่ละวันใน 7 วันที่ผ่านมา",
+        "Faculty Bar Chart": "สถิติตามคณะ (ทั้งหมด)",
+        "Posts": "โพสต์"
       },
       "Admin": {
         "Admin Dashboard": "แดชบอร์ดผู้ดูแลระบบ",
@@ -302,10 +309,17 @@ const resources = {
       },
       "Statistics": {
         "Campus Statistics": "Campus Statistics",
-        "Overview": "Data-driven insights into student wellbeing",
-        "Total Posts": "Total Moods Expressed",
-        "Mood Breakdown": "Overall Mood Distribution",
-        "Most Active Faculties": "Most Active Faculties"
+        "Overview": "Student mood insights and analytics",
+        "Total Posts": "Total Posts",
+        "Mood Breakdown": "Mood Breakdown",
+        "Most Active Faculties": "Most Active Faculties",
+        "Happy %": "Happy Rate",
+        "Sad %": "Sad Rate",
+        "Stress %": "Stress Rate",
+        "Mood Trend": "7-Day Mood Trend",
+        "Trend Desc": "Daily mood activity over the past 7 days",
+        "Faculty Bar Chart": "Faculty Statistics (All)",
+        "Posts": "Posts"
       },
       "Admin": {
         "Admin Dashboard": "Admin Dashboard",
